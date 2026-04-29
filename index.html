@@ -161,13 +161,26 @@
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
-  function handleSubmit() {
+function handleSubmit() {
     var name = document.getElementById('fname').value.trim();
     var phone = document.getElementById('phone').value.trim();
     var optin = document.getElementById('optin').checked;
     if (!name) { alert('Please enter your name.'); return; }
     if (!phone) { alert('Please enter your phone number.'); return; }
     if (!optin) { alert('Please agree to receive messages to subscribe.'); return; }
+    
+    fetch('https://hook.us2.make.com/q9ufufgxls9rx1klfwm0pdou8mw6v7ji', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        phone: phone,
+        language: selectedLang,
+        truck: 'Tacos El Patron',
+        timestamp: new Date().toISOString()
+      })
+    });
+
     document.getElementById('form-section').style.display = 'none';
     document.getElementById('success-section').style.display = 'block';
   }
