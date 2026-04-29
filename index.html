@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tacos El Patron — Border SMS Blast</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f8ff; }
+    .page { min-height: 100vh; padding-bottom: 2rem; }
+    .hero { background: #5BB8F5; padding: 2.5rem 1.5rem 3.5rem; text-align: center; position: relative; overflow: hidden; }
+    .blob1 { position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+    .blob2 { position: absolute; bottom: -30px; left: -10px; width: 70px; height: 70px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+    .logo { width: 68px; height: 68px; background: white; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .logo-inner { text-align: center; }
+    .logo-top { font-size: 8px; font-weight: 600; color: #2E86C1; letter-spacing: 1px; display: block; }
+    .logo-mid { font-size: 18px; font-weight: 600; color: #2E86C1; display: block; line-height: 1; }
+    .logo-bot { font-size: 7px; font-weight: 500; color: #5BB8F5; letter-spacing: 0.5px; display: block; }
+    .truck-badge { display: inline-block; background: rgba(255,255,255,0.95); color: #2E86C1; font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 20px; margin-bottom: 10px; }
+    .hero h1 { color: white; font-size: 22px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
+    .hero p { color: rgba(255,255,255,0.9); font-size: 13px; line-height: 1.5; }
+    .pill { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.18); color: white; font-size: 11px; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; }
+    .dot { width: 6px; height: 6px; background: #7aff9e; border-radius: 50%; display: inline-block; }
+    .card { background: white; border-radius: 20px; margin: -1.5rem 1rem 0; padding: 1.5rem 1.25rem; box-shadow: 0 2px 20px rgba(91,184,245,0.12); }
+    .card-header { padding: 0 0.25rem; margin-bottom: 1.25rem; }
+    .card-title { font-size: 15px; font-weight: 600; color: #1a3a5c; margin-bottom: 3px; }
+    .card-sub { font-size: 12px; color: #7a9ab5; line-height: 1.5; }
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-size: 11px; font-weight: 600; color: #2E86C1; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .field input { width: 100%; height: 44px; border: 1.5px solid #e0eefd; border-radius: 10px; padding: 0 14px; font-size: 15px; color: #1a3a5c; background: #f7fbff; outline: none; transition: border-color 0.2s, background 0.2s; }
+    .field input:focus { border-color: #5BB8F5; background: white; }
+    .field input::placeholder { color: #b0cce0; font-size: 13px; }
+    .lang-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .lang-btn { height: 44px; border: 1.5px solid #e0eefd; border-radius: 10px; background: #f7fbff; color: #7a9ab5; font-size: 13px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; font-weight: 400; }
+    .lang-btn.active { border-color: #5BB8F5; background: #e8f4fd; color: #2E86C1; font-weight: 600; }
+    .opt-box { background: #f7fbff; border: 1.5px solid #e0eefd; border-radius: 10px; padding: 12px; margin-bottom: 1.25rem; display: flex; gap: 10px; align-items: flex-start; }
+    .opt-box input[type=checkbox] { margin-top: 2px; accent-color: #2E86C1; width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+    .opt-box p { font-size: 11px; color: #7a9ab5; line-height: 1.6; }
+    .submit-btn { width: 100%; height: 50px; background: #5BB8F5; border: none; border-radius: 12px; color: white; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.15s, transform 0.1s; }
+    .submit-btn:hover { background: #2E86C1; }
+    .submit-btn:active { transform: scale(0.98); }
+    .divider { text-align: center; margin: 1rem 0 0.75rem; position: relative; }
+    .divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e0eefd; }
+    .divider span { background: white; padding: 0 10px; font-size: 11px; color: #b0cce0; position: relative; }
+    .tagline { font-size: 11px; color: #a0bdd0; text-align: center; line-height: 1.6; }
+    .perks { display: flex; flex-direction: column; gap: 8px; margin: 1rem 1rem 0; }
+    .perk { background: white; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; border: 1px solid #e0eefd; }
+    .perk-icon { width: 36px; height: 36px; background: #e8f4fd; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .perk-text p { font-size: 13px; color: #1a3a5c; font-weight: 600; }
+    .perk-text span { font-size: 11px; color: #7a9ab5; }
+    .powered { text-align: center; padding: 1rem 1rem 0; }
+    .powered p { font-size: 10px; color: #b0cce0; }
+    .powered a { color: #5BB8F5; text-decoration: none; }
+    .footer { text-align: center; padding: 0.5rem 1rem 0; }
+    .footer p { font-size: 10px; color: #a0bdd0; line-height: 1.8; }
+    .footer a { color: #5BB8F5; text-decoration: none; }
+    .success { display: none; text-align: center; padding: 3rem 1.5rem; }
+    .check-circle { width: 72px; height: 72px; background: #e8f4fd; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+    .success h2 { font-size: 20px; font-weight: 600; color: #1a3a5c; margin-bottom: 8px; }
+    .success p { font-size: 13px; color: #7a9ab5; line-height: 1.7; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <div class="blob1"></div>
+    <div class="blob2"></div>
+    <div class="logo">
+      <div class="logo-inner">
+        <span class="logo-top">BORDER</span>
+        <span class="logo-mid">SMS</span>
+        <span class="logo-bot">BLAST</span>
+      </div>
+    </div>
+    <div class="truck-badge">Tacos El Patron</div>
+    <div class="pill"><span class="dot"></span> El Paso, TX · Socorro, TX · 915</div>
+    <h1>Never miss your favorite<br>food truck again.</h1>
+    <p>Get a text when they open, where they're at,<br>and what's cooking today.</p>
+  </div>
+
+  <div id="form-section">
+    <div class="card">
+      <div class="card-header">
+        <p class="card-title">Sign up free / Regístrate gratis</p>
+        <p class="card-sub">Location, hours & today's special — straight to your phone.</p>
+      </div>
+
+      <div class="field">
+        <label>First Name / Nombre</label>
+        <input type="text" id="fname" placeholder="Your name..." />
+      </div>
+
+      <div class="field">
+        <label>Phone Number / Teléfono</label>
+        <input type="tel" id="phone" placeholder="+1 (915) 000-0000" />
+      </div>
+
+      <div class="field">
+        <label>Language / Idioma</label>
+        <div class="lang-row">
+          <button class="lang-btn active" onclick="setLang('en', this)">English</button>
+          <button class="lang-btn" onclick="setLang('es', this)">Español</button>
+        </div>
+      </div>
+
+      <div class="opt-box">
+        <input type="checkbox" id="optin" />
+        <p>I agree to receive SMS updates from Tacos El Patron about food truck locations, hours & specials. Reply <strong>STOP</strong> to unsubscribe anytime. Msg & data rates may apply.<br><br><em>Acepto recibir mensajes de Tacos El Patron sobre el puesto de comida — ubicación, horario y especiales. Responde STOP pa' salirte cuando quieras.</em></p>
+      </div>
+
+      <button class="submit-btn" onclick="handleSubmit()">Count me in →</button>
+
+      <div class="divider"><span>sin spam · no spam ever</span></div>
+      <p class="tagline">Solo avisamos cuando el puesto de comida está abierto.<br>We only text when the food truck is open.</p>
+    </div>
+
+    <div class="perks">
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2C5.13 2 2 5.13 2 9s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm.5 10.5h-1v-5h1v5zm0-6.5h-1V4.5h1V6z" fill="#2E86C1"/></svg>
+        </div>
+        <div class="perk-text"><p>Daily food truck updates</p><span>Know before you drive over</span></div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1L11.39 6.26L17 7.27L13 11.14L13.76 17L9 14.27L4.24 17L5 11.14L1 7.27L6.61 6.26L9 1Z" stroke="#2E86C1" stroke-width="1.5" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="perk-text"><p>Today's specials first</p><span>First to know, first in line</span></div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#2E86C1" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="#2E86C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="perk-text"><p>Sold out alerts</p><span>Never drive there for nothing</span></div>
+      </div>
+    </div>
+
+    <div class="powered">
+      <p>Powered by <a href="https://bordersmsblast.carrd.co">Border SMS Blast</a></p>
+    </div>
+
+    <div class="footer">
+      <p>Privacy Policy · Terms & Conditions<br>
+      <a href="https://bordersmsblast.carrd.co">bordersmsblast.carrd.co</a></p>
+    </div>
+  </div>
+
+  <div class="success" id="success-section">
+    <div class="check-circle">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M7 18l8 8 14-14" stroke="#5BB8F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h2>You're in! / ¡Ya quedaste!</h2>
+    <p>We'll text you next time Tacos El Patron is open.<br><br><em>Te mandamos mensaje la próxima vez que el puesto de comida abra.<br>¡Gracias raza!</em></p>
+  </div>
+</div>
+
+<script>
+  let selectedLang = 'en';
+  function setLang(lang, btn) {
+    selectedLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function handleSubmit() {
+    var name = document.getElementById('fname').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var optin = document.getElementById('optin').checked;
+    if (!name) { alert('Please enter your name.'); return; }
+    if (!phone) { alert('Please enter your phone number.'); return; }
+    if (!optin) { alert('Please agree to receive messages to subscribe.'); return; }
+    document.getElementById('form-section').style.display = 'none';
+    document.getElementById('success-section').style.display = 'block';
+  }
+</script>
+</body>
+</html>
